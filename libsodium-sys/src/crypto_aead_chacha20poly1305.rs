@@ -5,6 +5,7 @@ pub const crypto_aead_chacha20poly1305_NSECBYTES: usize = 0;
 pub const crypto_aead_chacha20poly1305_NPUBBYTES: usize = 8;
 pub const crypto_aead_chacha20poly1305_ABYTES: usize = 16;
 
+pub const crypto_aead_chacha20poly1305_ietf_NPUBBYTES: usize = 12;
 
 extern {
     pub fn crypto_aead_chacha20poly1305_keybytes() -> size_t;
@@ -30,6 +31,26 @@ extern {
         ad: *const u8,
         adlen: c_ulonglong,
         npub: *const [u8; crypto_aead_chacha20poly1305_NPUBBYTES],
+        k: *const [u8; crypto_aead_chacha20poly1305_KEYBYTES]) -> c_int;
+    pub fn crypto_aead_chacha20poly1305_ietf_encrypt(
+        c: *mut u8,
+        clen: *mut c_ulonglong,
+        m: *const u8,
+        mlen: c_ulonglong,
+        ad: *const u8,
+        adlen: c_ulonglong,
+        nsec: *const [u8; crypto_aead_chacha20poly1305_NSECBYTES],
+        npub: *const [u8; crypto_aead_chacha20poly1305_ietf_NPUBBYTES],
+        k: *const [u8; crypto_aead_chacha20poly1305_KEYBYTES]) -> c_int;
+    pub fn crypto_aead_chacha20poly1305_ietf_decrypt(
+        m: *mut u8,
+        mlen: *mut c_ulonglong,
+        nsec: *mut [u8; crypto_aead_chacha20poly1305_NSECBYTES],
+        c: *const u8,
+        clen: c_ulonglong,
+        ad: *const u8,
+        adlen: c_ulonglong,
+        npub: *const [u8; crypto_aead_chacha20poly1305_ietf_NPUBBYTES],
         k: *const [u8; crypto_aead_chacha20poly1305_KEYBYTES]) -> c_int;
 }
 
